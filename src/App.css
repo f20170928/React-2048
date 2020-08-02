@@ -1,0 +1,94 @@
+.App{
+  display: flex;
+  justify-content: center;
+}
+
+.game{
+  margin-top: 100px;
+}
+
+.board{
+  padding-top: 2px;
+  padding-bottom: 2px;
+  background-color: grey;
+
+}
+
+.row{
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.grid{
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: 60px;
+  text-align: center;
+  vertical-align: middle;
+  height: 100px;
+  width: 100px;
+  color: black;
+}
+
+.tilenull{
+  
+  background-color: lightgrey;
+ 
+}
+
+.tile2{
+  background-color:lightgoldenrodyellow;
+  
+}
+
+.tile4{
+  background-color:#ffc475;
+  
+}
+
+.tile8{
+  background-color:#ffb95c;
+  
+}
+
+.tile16{
+  background-color:#ffae42;
+  
+}
+
+.tile32{
+  background-color:#ffa329;
+  
+}
+
+.tile64{
+  background-color:#ff980f;
+  
+}
+
+.tilex{
+  background-color:#f58c00;
+  
+}
+.controls{
+  margin-top: 50px;
+}
+
+.btn{
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  height: 70px;
+  width: 70px;
+  border-radius: 5px;
+  background-color:black;
+  border-color: black;
+  color: lightgoldenrodyellow;
+}
