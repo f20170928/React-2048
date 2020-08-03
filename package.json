@@ -2,7 +2,7 @@
   "name": "test-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://f20170928.github.io/React-2048",
+  "homepage": "https://f20170928.github.io/React-2048/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -14,9 +14,9 @@
     "save-dev": "0.0.1-security"
   },
   "scripts": {
-    "start": "react-scripts start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

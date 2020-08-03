@@ -33,6 +33,9 @@ class Board extends React.Component{
     super(props);
     this.state={
       grids:Array(16).fill(null),
+      score: 0,
+      history: Array(),
+      historyScore: Array(),
     }
      //Random Tile Genration
      let firstTile = Math.floor(Math.random()*16);
@@ -42,6 +45,31 @@ class Board extends React.Component{
      }
      this.state.grids[firstTile] = 2;
      this.state.grids[secondTile] = 2;
+  }
+
+  restart(){
+    let resetGridState=Array(16).fill(null);
+    let firstTile = Math.floor(Math.random()*16);
+    let secondTile= Math.floor(Math.random()*16);
+    while(secondTile == firstTile){
+      secondTile= Math.floor(Math.random()*16);
+    }
+    resetGridState[firstTile] = 2;
+    resetGridState[secondTile] = 2;
+
+    this.setState({grids:resetGridState,score:0,history:Array(),historyScore:Array()});
+
+  }
+
+  undo(){
+    let undoHistory = this.state.history.slice();
+    let undoScore = this.state.historyScore.slice();
+
+    if(undoHistory.length > 0){
+      let currenState = undoHistory.pop();
+      let currentScore = undoScore.pop();
+      this.setState({grids:currenState,score:currentScore,history:undoHistory,historyScore:undoScore});
+    }
   }
 
   renderGrid(i){
@@ -85,6 +113,7 @@ class Board extends React.Component{
 
   onUp(){
     let newGridsState = this.state.grids.slice();
+    let score = this.state.score;
     
     for(let col=0;col<4;col++){
       for(let row=0;row<4;row++){
@@ -93,6 +122,7 @@ class Board extends React.Component{
             if(newGridsState[this.indexCalc(row2,col)] != null){
               if(newGridsState[this.indexCalc(row,col)] == newGridsState[this.indexCalc(row2,col)]){
                 newGridsState[this.indexCalc(row,col)] *= 2;
+                score += newGridsState[this.indexCalc(row,col)];
                 newGridsState[this.indexCalc(row2,col)] = null;
               }
               break;
@@ -117,19 +147,23 @@ class Board extends React.Component{
     }
     let randomIndex = this.randomNullPostionGen(newGridsState);
     if(randomIndex == null){
-      /*Game Over*/
+      this.restart();
     }
     else{
       newGridsState[randomIndex] = 2;
     }
-
-    this.setState({grids : newGridsState});
+    let newHistory = this.state.history;
+    let newScoreHistory = this.state.historyScore;
+    newHistory.push(this.state.grids.slice());
+    newScoreHistory.push(score);
+    this.setState({grids : newGridsState, score:score,history:newHistory,historyScore:newScoreHistory});
     
   }
 
   onDown(){
     let newGridsState = this.state.grids.slice();
-    
+    let score = this.state.score;
+
     for(let col=3;col>=0;col--){
       for(let row=3;row>=0;row--){
         if(newGridsState[this.indexCalc(row,col)] != null){
@@ -137,6 +171,7 @@ class Board extends React.Component{
             if(newGridsState[this.indexCalc(row2,col)] != null){
               if(newGridsState[this.indexCalc(row,col)] == newGridsState[this.indexCalc(row2,col)]){
                 newGridsState[this.indexCalc(row,col)] *= 2;
+                score += newGridsState[this.indexCalc(row,col)];
                 newGridsState[this.indexCalc(row2,col)] = null;
               }
               break;
@@ -161,19 +196,23 @@ class Board extends React.Component{
     }
     let randomIndex = this.randomNullPostionGen(newGridsState);
     if(randomIndex == null){
-      /*Game Over*/
+      this.restart();
     }
     else{
       newGridsState[randomIndex] = 2;
     }
 
-    this.setState({grids : newGridsState});
-    
+    let newHistory = this.state.history;
+    let newScoreHistory = this.state.historyScore;
+    newHistory.push(this.state.grids.slice());
+    newScoreHistory.push(score);
+    this.setState({grids : newGridsState, score:score,history:newHistory,historyScore:newScoreHistory});
   }
 
   onLeft(){
     let newGridsState = this.state.grids.slice();
-    
+    let score = this.state.score;
+
     for(let row=0;row<4;row++){
       for(let col=0;col<4;col++){
         if(newGridsState[this.indexCalc(row,col)] != null){
@@ -181,6 +220,7 @@ class Board extends React.Component{
             if(newGridsState[this.indexCalc(row,col2)] != null){
               if(newGridsState[this.indexCalc(row,col)] == newGridsState[this.indexCalc(row,col2)]){
                 newGridsState[this.indexCalc(row,col)] *= 2;
+                score += newGridsState[this.indexCalc(row,col)];
                 newGridsState[this.indexCalc(row,col2)] = null;
               }
               break;
@@ -205,18 +245,23 @@ class Board extends React.Component{
     }
     let randomIndex = this.randomNullPostionGen(newGridsState);
     if(randomIndex == null){
-      /*Game Over*/
+      this.restart();
     }
     else{
       newGridsState[randomIndex] = 2;
     }
 
-    this.setState({grids : newGridsState});
+    let newHistory = this.state.history;
+    let newScoreHistory = this.state.historyScore;
+    newHistory.push(this.state.grids.slice());
+    newScoreHistory.push(score);
+    this.setState({grids : newGridsState, score:score,history:newHistory,historyScore:newScoreHistory});
     
   }
 
   onRight(){
     let newGridsState = this.state.grids.slice();
+    let score = this.state.score;
     
     for(let row=3;row>=0;row--){
       for(let col=3;col>=0;col--){
@@ -225,6 +270,7 @@ class Board extends React.Component{
             if(newGridsState[this.indexCalc(row,col2)] != null){
               if(newGridsState[this.indexCalc(row,col)] == newGridsState[this.indexCalc(row,col2)]){
                 newGridsState[this.indexCalc(row,col)] *= 2;
+                score += newGridsState[this.indexCalc(row,col)];
                 newGridsState[this.indexCalc(row,col2)] = null;
               }
               break;
@@ -249,13 +295,17 @@ class Board extends React.Component{
     }
     let randomIndex = this.randomNullPostionGen(newGridsState);
     if(randomIndex == null){
-      /*Game Over*/
+      this.restart();
     }
     else{
       newGridsState[randomIndex] = 2;
     }
 
-    this.setState({grids : newGridsState});
+    let newHistory = this.state.history;
+    let newScoreHistory = this.state.historyScore;
+    newHistory.push(this.state.grids.slice());
+    newScoreHistory.push(score);
+    this.setState({grids : newGridsState, score:score,history:newHistory,historyScore:newScoreHistory});
     
   }
 
@@ -263,6 +313,12 @@ class Board extends React.Component{
   render(){
     return(
       <div className="game">
+        <div className="title-score">
+          <div className="title">2048</div>
+          <div className="score">Score:{this.state.score}</div>
+          <button className="reset-button" onClick={()=>this.restart()}>Restart</button>
+          <button className="undo-button" onClick={()=>this.undo()}>⟲</button>
+        </div>
         <div className="board">
           <div className="row">
             {this.renderGrid(0)}
